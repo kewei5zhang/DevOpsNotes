@@ -1,22 +1,50 @@
-import prometheus_client as prometheus_client
-from flask import Flask, Response
-
+from flask import Flask, Response, request
+import random
+import time
+from prometheus_flask_exporter import PrometheusMetrics
 from app_helper import setup_metrics
 
-CONTENT_TYPE_LATEST = str('text/plain; version=0.0.4; charset=utf-8')
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+# Initialize any custom metrics (if needed)
 setup_metrics(app)
 
-
-@app.route('/test/')
-def test():
-    return 'rest'
+# Example of static information as metric
+metrics.info("app_info", "Application info", version="1.0.3")
 
 
-@app.route('/test1/')
-def test1():
-    1/0
-    return 'rest'
+@app.route("/")
+def hello_world():
+    return "👀 Monitoring Everyting!"
+
+
+@app.route("/green")
+def green():
+    return "Green"
+
+
+@app.route("/red")
+def red():
+    1 / 0  # This will cause a division by zero error
+    return "Red"
+
+
+ERROR_RATE = 0.1  # 10% chance of error
+LATENCY_MIN = 100  # Minimum latency in milliseconds
+LATENCY_MAX = 5000  # Maximum latency in milliseconds
+
+
+@app.route("/simulation")
+def simulation():
+    # Simulate variable response latency
+    latency_ms = random.uniform(LATENCY_MIN, LATENCY_MAX)
+    time.sleep(latency_ms / 1000.0)
+
+    if random.random() < ERROR_RATE:
+        # Simulate an error
+        raise Exception("Simulated error based on configured error rate.")
+
+    return f"Request successful. Simulated latency: {latency_ms:.2f} milliseconds."
 
 
 @app.errorhandler(500)
@@ -24,12 +52,5 @@ def handle_500(error):
     return str(error), 500
 
 
-# The generate_latest() function generates the latest metrics and sets the content type to indicate the Prometheus
-# server that we are sending the metrics in text format using the 0.0.4 version.
-@app.route('/metrics/')
-def metrics():
-    return Response(prometheus_client.generate_latest(), mimetype=CONTENT_TYPE_LATEST)
-
-
-if __name__ == '__main__':
-    app.run()
+if __name__ == "__main__":
+    app.run(debug=True)

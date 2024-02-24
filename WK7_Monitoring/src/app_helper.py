@@ -5,12 +5,16 @@ import sys
 from prometheus_client import Counter, Histogram
 
 REQUEST_COUNT = Counter(
-    'request_count', 'App Request Count',
-    ['app_name', 'method', 'endpoint', 'http_status']
+    "custom_request_count",
+    "Custom App Request Count",
+    ["app_name", "method", "endpoint", "http_status", "custom_label"],
 )
-REQUEST_LATENCY = Histogram('request_latency_seconds', 'Request latency',
-                            ['app_name', 'endpoint']
-                            )
+
+REQUEST_LATENCY = Histogram(
+    "custom_request_latency_seconds",
+    "Custom Request latency",
+    ["app_name", "endpoint", "http_status", "custom_label"],
+)
 
 
 def start_timer():
@@ -31,13 +35,16 @@ def start_timer():
 def stop_timer(response):
     resp_time = time.time() - request.start_time
     sys.stderr.write("Response time: %ss\n" % resp_time)
-    REQUEST_LATENCY.labels('webapp', request.path).observe(resp_time)
+    REQUEST_LATENCY.labels(
+        "webapp", request.path, response.status_code, "custom"
+    ).observe(resp_time)
     return response
 
 
 def record_request_data(response):
-    REQUEST_COUNT.labels('webapp', request.method, request.path,
-                         response.status_code).inc()
+    REQUEST_COUNT.labels(
+        "webapp", request.method, request.path, response.status_code, "custom"
+    ).inc()
     return response
 
 
