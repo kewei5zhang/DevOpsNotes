@@ -2,7 +2,7 @@ from flask import request
 import time
 import sys
 
-from prometheus_client import Counter, Histogram
+from prometheus_client import Counter, Histogram, Summary
 
 REQUEST_COUNT = Counter(
     "custom_request_count",
@@ -15,6 +15,12 @@ REQUEST_LATENCY = Histogram(
     "Custom Request latency",
     ["app_name", "endpoint", "http_status", "custom_label"],
 )
+
+# REQUEST_LATENCY_SUMMARY = Summary(
+#     "custom_request_latency_seconds_summary",
+#     "Custom Request Latency Summary",
+#     ["app_name", "endpoint", "http_status", "custom_label"],
+# )
 
 
 def start_timer():
@@ -38,6 +44,9 @@ def stop_timer(response):
     REQUEST_LATENCY.labels(
         "webapp", request.path, response.status_code, "custom"
     ).observe(resp_time)
+    # REQUEST_LATENCY_SUMMARY.labels(
+    #     "webapp", request.path, response.status_code, "custom"
+    # ).observe(resp_time)
     return response
 
 

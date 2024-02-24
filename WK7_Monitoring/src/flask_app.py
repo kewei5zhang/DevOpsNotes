@@ -31,7 +31,7 @@ def red():
 
 ERROR_RATE = 0.1  # 10% chance of error
 LATENCY_MIN = 100  # Minimum latency in milliseconds
-LATENCY_MAX = 5000  # Maximum latency in milliseconds
+LATENCY_MAX = 1000  # Maximum latency in milliseconds
 
 
 @app.route("/simulation")

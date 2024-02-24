@@ -22,6 +22,7 @@ def stop_timer(response):
             "endpoint:%s" % request.path,
             "method:%s" % request.method,
             "status:%s" % str(response.status_code),
+            "custom_label:custom",
         ],
     )
     return response
@@ -35,6 +36,7 @@ def record_request_data(response):
             "method:%s" % request.method,
             "endpoint:%s" % request.path,
             "status:%s" % str(response.status_code),
+            "custom_label:custom",
         ],
     )
     return response

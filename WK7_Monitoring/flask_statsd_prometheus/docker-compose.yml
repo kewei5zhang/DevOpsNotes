@@ -1,10 +1,10 @@
-version: '2'
+version: "2"
 
 services:
   webapp:
     image: jr/flask_app_statsd
     container_name: webapp
     expose:
-      - 5000
+      - 3000
     ports:
-      - 5000:5000
+      - 3000:3000
