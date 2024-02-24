@@ -1,0 +1,61 @@
+---
+- hosts: tag_redis
+  become: yes
+  become_user: root
+  user: ubuntu
+
+  vars:
+    name: YourName
+    toRestart: False
+
+  tasks:
+    - name: Install nginx package
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Start service nginx
+      service:
+        name: nginx
+        state: started
+
+    - name: Create a hello world file
+      copy:
+        dest: "/var/www/html/index.nginx-debian.html"
+        content: |
+          <!DOCTYPE html>
+          <html>
+          <head>
+          <title>Welcome to nginx!</title>
+          </head>
+          <body>
+          <h1>Welcome, {{ name }}!</h1>
+          <p>This is from {{ ansible_facts['nodename'] }}</p>
+          </body>
+          </html>
+      register: copyresult
+
+    - name: debug
+      debug:
+        msg: "{{copyresult}}" # noticed the changed field
+
+    ## controlled by plain variable
+    # - name: Start service nginx
+    #   service:
+    #     name: nginx
+    #     state: restarted
+    #   when: toRestart
+
+    - name: Restart service nginx if config file is changed
+      service:
+        name: nginx
+        state: restarted
+      when: copyresult.changed
+
+    # # that's why nginx is not declarative
+    # - name: Stop nginx service
+    #   service:
+    #     name: nginx
+    #     state: stopped
+
