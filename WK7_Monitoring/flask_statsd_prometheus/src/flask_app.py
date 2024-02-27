@@ -1,9 +1,11 @@
 from flask import Flask, Response, request
 import random
 import time
+from prometheus_flask_exporter import PrometheusMetrics
 from app_helper import setup_metrics
 
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
 # Initialize any custom metrics (if needed)
 setup_metrics(app)
 

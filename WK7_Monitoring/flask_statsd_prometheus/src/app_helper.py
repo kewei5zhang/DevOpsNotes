@@ -4,7 +4,7 @@ import time
 
 
 statsd = DogStatsd(host="statsd", port=9125)
-REQUEST_LATENCY_METRIC_NAME = "request_latency_seconds"
+REQUEST_LATENCY_METRIC_NAME = "request_latency_seconds_hist"
 REQUEST_COUNT_METRIC_NAME = "request_count"
 
 
