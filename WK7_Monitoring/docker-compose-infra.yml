@@ -5,14 +5,20 @@ volumes:
   grafana_data: {}
 
 services:
+  stastd:
+    image: prom/statsd-exporter
+    container_name: statsd
+    ports:
+      - "9102:9102"
+      - "9125:9125/udp"
   prometheus:
-    image: prom/prometheus
+    image: bitnami/prometheus
     container_name: prometheus
     volumes:
-      - ./config/prometheus/:/etc/prometheus/
-      - prometheus_data:/prometheus
+      - ./config/prometheus/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
+      - ./prometheus_data:/opt/bitnami/prometheus/data
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--config.file=/opt/bitnami/prometheus/conf/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
     expose:
       - 9090
@@ -20,6 +26,8 @@ services:
       - 9090:9090
   node-exporter:
     image: prom/node-exporter
+    ports:
+      - 9100:9100
     expose:
       - 9100
   grafana:

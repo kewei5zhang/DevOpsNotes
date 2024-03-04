@@ -1,0 +1,51 @@
+# About Me
+
+# DevOps Myth
+
+DevOps Myth: Cloud Means Always Available: There's a common misconception that utilizing cloud services automatically guarantees 100% uptime and availability. However, cloud services, like any other infrastructure, can experience downtime due to various factors such as misconfigurations, network issues, or even cloud provider outages. While cloud providers offer high availability features, it's still essential for DevOps teams to design resilient architectures, implement proper monitoring, and have contingency plans in place to mitigate the impact of potential disruptions.
+
+DevOps Myth: Continuous Deployment Means Constant Changes: There's a misconception that implementing continuous deployment in DevOps leads to a chaotic environment with constant changes and instability. However, the reality is that continuous deployment emphasizes automation, rigorous testing, and monitoring to ensure that only high-quality, thoroughly validated changes are deployed to production. Continuous deployment doesn't mean reckless or constant updates; instead, it enables teams to deliver changes more frequentply while maintaining stability and reliability through automated testing and deployment pipelines.
+
+DevOps Myth: Microservices Are Always Superior to Monolithic Architectures: There's a misconception that breaking down applications into microservices is inherently better than sticking with a monolithic architecture. While microservices offer benefits such as scalability and agility, they also introduce complexities like increased operational overhead and potential network latency. Monolithic architectures, on the other hand, can be simpler to manage and deploy. The key is to carefully evaluate the specific needs and constraints of your project before deciding on the architecture that best suits your requirements. Sometimes, a monolithic architecture might be more suitable and efficient for certain applications.
+
+DevOps Myth: Tools Over Team Collaboration: Some believe that adopting the latest DevOps tools will automatically improve collaboration and efficiency. However, the truth is that tools are just one aspect of the DevOps equation. Real success comes from fostering a culture of collaboration, communication, and shared responsibility across teams. Tools should complement and enhance these practices, rather than being seen as a substitute for them.
+
+# Incident management real life example
+
+Story 1
+
+18:10 pm PST: On-call was alerted to high latency within the indexing pipeline responsible for pulling data from the blockchain and writing it to our database.
+18:15 pm PST: On-call received another alert due to elevated CPU usage and a significant backlog of active sessions waiting on the CPU in the writer node.
+18:20 pm PST: Ops team reported user complaints regarding purchased items not appearing in their "My items" page.
+18:25 pm PST: On-call identified numerous SELECT queries being executed on the primary writer node and correlated this with a recent change touching the API service, which included updates to database connection queries stored in the secret manager.
+18:40 pm PST: On-call executed a rollback of the recent change, restarted pods, and terminated queries on the database, resolving the issue.
+
+Story 2
+
+- Bot traffic
+
+5:00 UTC: Monitoring systems detect a surge in throughput to the our API.
+5:05 UTC: Pods experience memory exhaustion due to increased resource consumption from bot traffic.
+5:05 UTC: API latency increases, and error rates rise as a result of degraded performance. Oncall was paged and jump online. 
+5:15 UTC: Investigation reveals bot traffic increase to exploit some filter options in our search API. 
+5:30 UTC: Decision made to deploy a rate limit and Bot deteciont Web Application Firewall (WAF) to further restrict the search endpoint. 
+5:40 UTC: Rate limit and bot detection rule implementation successfully mitigates the impact of malicious bot traffic.
+5:45 UTC: API latency returns to acceptable levels, and error rates decrease significantly.
+
+Story 3
+
+- Datadog log ingestion
+  
+20:00 UTC: Significant increase observed in DataDog indexing and log ingestion.
+20:15 UTC: Investigation reveals unfiltered logs in a service causing excessive indexing and ingestion of data.
+20:30 UTC: Decision made to implement log filtering to reduce unnecessary data ingestion.
+21:00 UTC: Log filtering implementation completed, reducing the volume of ingested data.
+22:30 UTC: DataDog indexing and log ingestion return to expected levels following the reduction in ingested data.
+
+What is monitoring
+
+Why is monitoring Important
+
+Prometheus
+
+Prometheus and Open telemetry

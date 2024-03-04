@@ -4,11 +4,15 @@ import time
 from prometheus_flask_exporter import PrometheusMetrics
 from app_helper import setup_metrics
 
+# Create a Flask app
 app = Flask(__name__)
-metrics = PrometheusMetrics(app)
-# Initialize any custom metrics (if needed)
-setup_metrics(app)
 
+# Use PrometheusMetrics to instrument the app
+metrics = PrometheusMetrics(app)
+metrics.info("app_info", "Application info", version="1.0.3")
+
+# Use customized app_helper to instrument the app
+setup_metrics(app)
 
 @app.route("/")
 def hello_world():

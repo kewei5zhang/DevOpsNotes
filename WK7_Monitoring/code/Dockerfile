@@ -1,7 +1,6 @@
 FROM python:3.6.1-alpine
 ADD src/ /application
 WORKDIR /application
-RUN pip install --upgrade pip
 RUN set -e; \
 	apk add --no-cache --virtual .build-deps \
 	gcc \
