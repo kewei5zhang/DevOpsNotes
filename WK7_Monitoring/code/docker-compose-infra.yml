@@ -16,7 +16,7 @@ services:
     container_name: prometheus
     volumes:
       - ./config/prometheus/prometheus.yml:/opt/bitnami/prometheus/conf/prometheus.yml
-      - ./prometheus_data:/opt/bitnami/prometheus/data
+      - prometheus_data:/opt/bitnami/prometheus/data
     command:
       - "--config.file=/opt/bitnami/prometheus/conf/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
