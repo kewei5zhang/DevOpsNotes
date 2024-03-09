@@ -1,0 +1,7 @@
+*.swp
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+prometheus_data
+myenv/
