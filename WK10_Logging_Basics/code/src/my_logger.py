@@ -9,7 +9,7 @@ LOG_FILE = "my_app.log"
 class OneLineExceptionFormatter(logging.Formatter):
     def formatException(self, exc_info):
         result = super().formatException(exc_info)
-        return repr(result)  # The repr() function returns a printable representation of the given object
+        return repr(result)  # The repr() function converts the multi-line exception trace into a string representation that includes escape characters for newlines.
 
     def format(self, record):
         result = super().format(record)
@@ -38,4 +38,5 @@ def get_logger(logger_name):
     logger.addHandler(get_file_handler(one_line_formatter))
     # with this pattern, it's rarely necessary to propagate the error up to parent
     logger.propagate = False
+    # prevent the log messages from being propagated to the logger's parent
     return logger
