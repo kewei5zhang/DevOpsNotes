@@ -1,0 +1,5 @@
+Flask>=1.1.2
+datadog>=0.40.0
+prometheus_client>=0.7.1
+prometheus_flask_exporter>=0.18.1
+uwsgi>=2.0.18

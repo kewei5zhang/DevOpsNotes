@@ -4,5 +4,5 @@ resource "grafana_folder" "terraform" {
 
 resource "grafana_dashboard" "terraform" {
   folder      = grafana_folder.terraform.uid
-  config_json = file("my_dashboard.json")
+  config_json = file("app_health.json")
 }

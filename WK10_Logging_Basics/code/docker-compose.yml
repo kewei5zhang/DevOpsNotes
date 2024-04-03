@@ -2,9 +2,9 @@ version: "2"
 
 services:
   webapp:
-    image: jr/flask_app_statsd
+    image: jr/flask_app
     container_name: webapp
     expose:
-      - 5001
+      - 3001
     ports:
-      - 5001:5001
+      - 3001:3001
